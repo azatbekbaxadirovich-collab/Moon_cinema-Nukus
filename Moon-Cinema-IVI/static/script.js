@@ -1,0 +1,6 @@
+function scrollRow(id,dir){document.getElementById(id)?.scrollBy({left:dir*420,behavior:'smooth'})}
+document.querySelectorAll('.movie').forEach(card=>{const v=card.querySelector('video'); if(v){card.addEventListener('mouseenter',()=>v.play().catch(()=>{}));card.addEventListener('mouseleave',()=>{v.pause();v.currentTime=0});}})
+function openMovie(card){const d=JSON.parse(card.querySelector('.movie-data').textContent);document.getElementById('modalTitle').textContent=d.title;document.getElementById('modalTag').textContent=d.tag||'MOON CINEMA';document.getElementById('modalDesc').textContent=d.description||'';document.getElementById('modalMeta').textContent=[d.genre,d.age,d.year,d.duration].filter(Boolean).join('  ·  ');const v=document.getElementById('modalVideo');v.src=d.video||'';document.getElementById('modal').classList.add('show');if(d.video)v.play().catch(()=>{});}
+function closeMovie(){const m=document.getElementById('modal'),v=document.getElementById('modalVideo');v.pause();v.src='';m.classList.remove('show')}
+document.getElementById('modal')?.addEventListener('click',e=>{if(e.target.id==='modal')closeMovie()});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});document.querySelectorAll('.section,.feature,.contact').forEach(e=>obs.observe(e));
